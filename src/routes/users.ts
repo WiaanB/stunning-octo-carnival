@@ -1,18 +1,7 @@
 import Client from '../prisma';
+import { IResponse, User } from '../types';
 
-type User = {
-  id?: number;
-  username: string;
-  first_name: string;
-  last_name: string;
-};
-
-export interface IResponse {
-  error?: string;
-  data?: User | User[] | null;
-}
-
-export const getUserById = async (id: number): Promise<IResponse> => {
+export const getUserById = async (id: number): Promise<IResponse<User>> => {
   const user: User | null = await Client.user.findUnique({
     where: {
       id
@@ -22,7 +11,7 @@ export const getUserById = async (id: number): Promise<IResponse> => {
   return { data: user };
 };
 
-export const getAllUsers = async (size: number, page: number): Promise<IResponse> => {
+export const getAllUsers = async (size: number, page: number): Promise<IResponse<User>> => {
   const shouldSkip = page * size > size;
   const users: User[] = await Client.user.findMany({
     take: size,
@@ -38,7 +27,7 @@ export const getAllUsers = async (size: number, page: number): Promise<IResponse
   return { data: users };
 };
 
-export const createUser = async (data: User): Promise<IResponse> => {
+export const createUser = async (data: User): Promise<IResponse<User>> => {
   const { username, first_name, last_name } = data;
 
   if (username === '') return { error: 'Username is required' };
@@ -58,7 +47,7 @@ export const createUser = async (data: User): Promise<IResponse> => {
   };
 };
 
-export const updateUser = async (id: number, data: User): Promise<IResponse> => {
+export const updateUser = async (id: number, data: User): Promise<IResponse<User>> => {
   const user: User | null = await Client.user.findUnique({
     where: {
       id
