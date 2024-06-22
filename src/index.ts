@@ -6,7 +6,7 @@ import userRouter from './routes';
 
 const app: Express = express();
 
-const port: number = Number(process.env.SERVER_PORT) || 3000;
+const port: number = Number(process.env.SERVER_PORT) || 8000;
 
 app.use(cors());
 app.use(express.json());
