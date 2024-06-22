@@ -215,6 +215,47 @@
       }
     },
     "/api/users/{id}/tasks": {
+      "get": {
+        "tags": ["Tasks"],
+        "description": "Get tasks for a user",
+        "operationId": "getTasksByUserId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tasks retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tasks"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "User not found",
+                  "internal_code": 404
+                }
+              }
+            }
+          }
+        }
+      },
       "post": {
         "tags": ["Tasks"],
         "description": "Create a new task",
@@ -492,7 +533,7 @@
       "TaskRequest": {
         "type": "object",
         "properties": {
-          "title": {
+          "name": {
             "type": "string"
           },
           "description": {

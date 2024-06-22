@@ -2,7 +2,7 @@ import Client from '../prisma';
 import { IResponse, Task } from '../types';
 
 export const createTask = async (id: number, data: Task): Promise<IResponse<Task>> => {
-  const { name } = data;
+  const { name, description } = data;
   let { status, date_time } = data;
 
   if (name === '') return { error: 'Name is required' };
@@ -22,6 +22,7 @@ export const createTask = async (id: number, data: Task): Promise<IResponse<Task
     data: {
       name,
       status,
+      description,
       date_time,
       user_id: id
     }
@@ -104,7 +105,8 @@ export const getTaskById = async (userId: number, taskId: number): Promise<IResp
 
   const task: Task | null = await Client.task.findUnique({
     where: {
-      id: taskId
+      id: taskId,
+      user_id: userId
     }
   });
 

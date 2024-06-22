@@ -8,12 +8,13 @@ datasource db {
 }
 
 model Task {
-  id        Int      @id @default(autoincrement())
-  name      String
-  status    String   @default("todo")
-  date_time DateTime @default(now())
-  user_id   Int
-  user      User     @relation(fields: [user_id], references: [id])
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String   @default("")
+  status      String   @default("pending")
+  date_time   DateTime @default(now())
+  user_id     Int
+  user        User     @relation(fields: [user_id], references: [id])
 }
 
 model User {

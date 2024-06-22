@@ -1,8 +1,9 @@
 export type Task = {
   id?: number;
   name: string;
+  description: string;
   status: string;
-  date_time: Date;
+  date_time?: Date;
   user_id: number;
 };
 
