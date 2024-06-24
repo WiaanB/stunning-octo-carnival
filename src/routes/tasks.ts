@@ -8,6 +8,7 @@ export const createTask = async (id: number, data: Task): Promise<IResponse<Task
   if (name === '') return { error: 'Name is required' };
   if (status === '') status = 'pending';
   if (date_time === null) date_time = new Date();
+  else date_time = new Date(`${date_time}`);
 
   // ensure the user exists
   const user = await Client.user.findUnique({
